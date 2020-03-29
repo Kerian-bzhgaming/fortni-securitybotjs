@@ -1,14 +1,14 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs")
+require("dotenv")
 
-var token = ("NjY1OTMzMzk0NDk2MDYxNDUw.Xn-XFg.PkSCclljDmFu1-Oll9yrMKDGFFk")
 var prefix = ("?")
 var clogs = JSON.parse(fs.readFileSync('./bd/slogs.json', 'utf8'));
 var c = ["BLACK", "WRITE", "RED", "BLUE", "GREEN", "GREY", "PURPLE", "CYAN"]
 var cs = Math.floor((Math.random() * c.length));
 
-client.login(token)
+client.login(process.env.TOKEN)
 
 client.on("ready", function() {
 
@@ -141,7 +141,7 @@ client.on('guildMemberAdd', member => {
             .setColor(c[cs])
 
         client.channels.get("682337944085856301").send(embed)
-        client.channels.get("682337964260458606").send(member.tag + " vient d'arriver, dite lui bienvenue!")
+        client.channels.get("682337964260458606").send(member.user.tag + " vient d'arriver, dite lui bienvenue!")
     }
 
 })

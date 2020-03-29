@@ -21,6 +21,7 @@
     "homepage": "https://github.com/Kerian-bzhgaming/fortni-securitybotjs#readme",
     "dependencies": {
         "discord.js": "11.6.1",
+        "dotenv": "^8.2.0",
         "fs": "0.0.1-security"
     }
 }
