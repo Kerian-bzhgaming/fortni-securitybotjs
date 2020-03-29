@@ -85,8 +85,7 @@ client.on("message", msg => {
 
                 if (msg.member.permissions.has("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
-                var mention = msg.mentions.users.first()
-
+                let mention = msg.mentions.users.first()
                 if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
 
                 let mb = msg.guild.member(mention)
