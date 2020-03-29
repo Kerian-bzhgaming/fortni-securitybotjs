@@ -88,10 +88,27 @@ client.on("message", msg => {
                 let mention = msg.mentions.users.first()
                 if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
 
-                let mb = msg.guild.member(mention)
-                let raison = msg.content.slice(`${prefix}ban ${mention}`).split(/ +/g).join(" ")
+
+                let arg = msg.content.split(' ').slice(1)
+                let raison = args.slice(1).join(' ')
                 let r = raison.toLowerCase()
+
+
+                if (!mention) {
+                    try {
+
+                        if (!message.guild.members.get(args.slice(0, 1).join(' ')))
+
+                            mention = message.guild.members.get(args.slice(0, 1).join(' '));
+                        mention = mention.user;
+                    } catch (error) {
+                        return msg2.edit("<a:non:691361782387703818>Aucun utilisateur ou id d 'utilisateur donné!")
+
+                    }
+                }
+                if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous bannir...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucune raison donné...")
+                if (!message.guild.member(user).bannable) return message.reply("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
 
                 let embeda = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
@@ -101,18 +118,18 @@ client.on("message", msg => {
                     .setTimestamp()
                     .setThumbnail(msg.author.avatarURL)
 
-                mb.send(embeda)
+                mention.user.send(embeda)
 
-                mb.ban({
+                mention.ban({
                     reason: r
                 })
                 let embeds = new Discord.RichEmbed()
-                    .setAuthor(mb.user.tag)
+                    .setAuthor(mention.tag)
                     .addField("pour la raison suivante:", r)
                     .addField("Par:", msg.author.tag)
                     .addBlankField()
-                    .addField("ID du banni:", mb.user.id)
-                    .setThumbnail(mb.user.avatarURL)
+                    .addField("ID du banni:", mention.id)
+                    .setThumbnail(mention.avatarURL)
                     .setColor("RED")
                     .setTimestamp()
 
