@@ -1,25 +1,26 @@
 {
-  "name": "fortnib",
-  "version": "0.0.1",
-  "description": "un bot ",
-  "main": "app.js",
-  "scripts": {
-    "test": "aucune"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kerian-bzhgaming/fortni-securitybotjs.git"
-  },
-  "keywords": [
-    "//"
-  ],
-  "author": "Kérian#0765*",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Kerian-bzhgaming/fortni-securitybotjs/issues"
-  },
-  "homepage": "https://github.com/Kerian-bzhgaming/fortni-securitybotjs#readme",
-  "dependencies": {
-    "discord.js": "^12.0.2"
-  }
+    "name": "fortnib",
+    "version": "0.0.1",
+    "description": "un bot ",
+    "main": "app.js",
+    "scripts": {
+        "test": "aucune"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kerian-bzhgaming/fortni-securitybotjs.git"
+    },
+    "keywords": [
+        "//"
+    ],
+    "author": "Kérian#0765*",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Kerian-bzhgaming/fortni-securitybotjs/issues"
+    },
+    "homepage": "https://github.com/Kerian-bzhgaming/fortni-securitybotjs#readme",
+    "dependencies": {
+        "discord.js": "11.6.1",
+        "fs": "0.0.1-security"
+    }
 }
