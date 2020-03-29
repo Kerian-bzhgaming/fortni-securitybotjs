@@ -32,17 +32,15 @@ client.on("ready", function() {
 client.on("message", msg => {
     if (msg.content.startsWith(prefix + "clogs")) {
 
-
-        let args = msg.mentions.channels.first();
-        if (!args) return msg.channel.send(`<a:non:691361782387703818>Erreur de syntaxe.`)
-
-        let ch = args.id
-        let serveur = msg.guild.id
-        let info = clogs.find(e => e.guild_id === msg.guild.id)
-
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
                 if (!msg.member.permissions.has("MANAGE_CHANNELS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise.")
+                let args = msg.mentions.channels.first();
+                if (!args) return msg2.edit(`<a:non:691361782387703818>Erreur de syntaxe.`)
+
+                let ch = args.id
+                let serveur = msg.guild.id
+                let info = clogs.find(e => e.guild_id === msg.guild.id)
                 if (ch === info.channel_id) return msg2.edit("<a:non:691361782387703818>Ce salon est déjà sauvegardé...")
                 clogs.push({ guild_id: serveur, channel_id: ch })
                 console.log("yep")
@@ -85,9 +83,9 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
 
-                if (msg.member.permissions.has("BAN_MEMBERS"))
+                if (msg.member.permissions.has("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
-                    var mention = msg.mentions.users.first()
+                var mention = msg.mentions.users.first()
 
                 if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
 
