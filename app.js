@@ -139,7 +139,7 @@ client.on('guildMemberAdd', member => {
             .setFooter("Tu as rejoins à:")
             .setTimestamp()
             .setColor(c[cs])
-
+        member.addRole("682337868605030470")
         client.channels.get("682337944085856301").send(embed)
         client.channels.get("682337964260458606").send(member.user.tag + " vient d'arriver, dite lui bienvenue!")
     }
