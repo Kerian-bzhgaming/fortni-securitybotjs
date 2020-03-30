@@ -4,7 +4,9 @@
     "description": "un bot ",
     "main": "app.js",
     "scripts": {
-        "test": "aucune"
+        "test": "aucune",
+        "start": "node app.js",
+        "restart": "node app.js"
     },
     "repository": {
         "type": "git",
