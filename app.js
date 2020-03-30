@@ -34,13 +34,14 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
-                if (!msg.member.permissions.has("MANAGE_CHANNELS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise.")
+                if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise.")
                 let args = msg.mentions.channels.first();
                 if (!args) return msg2.edit(`<a:non:691361782387703818>Erreur de syntaxe.`)
 
                 let ch = args.id
                 let serveur = msg.guild.id
                 let info = clogs.find(e => e.guild_id === msg.guild.id)
+                if (!info.length === 18) return
                 if (ch === info.channel_id) return msg2.edit("<a:non:691361782387703818>Ce salon est déjà sauvegardé...")
                 clogs.push({ guild_id: serveur, channel_id: ch })
                 console.log("yep")
@@ -83,7 +84,7 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
 
-                if (msg.member.permissions.has("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
+                if (msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
                 let mention = msg.mentions.users.first()
                 if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
@@ -118,7 +119,7 @@ client.on("message", msg => {
                     .setTimestamp()
                     .setThumbnail(msg.author.avatarURL)
 
-                mention.user.send(embeda)
+                //mention.send(embeda)
 
                 mention.ban({
                     reason: r
@@ -137,7 +138,7 @@ client.on("message", msg => {
                 let channel2 = client.channels.get(info.channel_id)
 
                 channel2.send(embeds)
-                msg2.edit("<a:oui:691361629530619915>" + mb.user.tag + " a été banni avec succès!")
+                msg2.edit("<a:oui:691361629530619915>" + mb.u.tag + " a été banni avec succès!")
 
             })
     }
