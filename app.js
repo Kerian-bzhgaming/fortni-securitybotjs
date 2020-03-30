@@ -84,7 +84,7 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
 
-                if (msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
+                if (!msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
                 let mention = msg.mentions.users.first()
                 if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
@@ -103,7 +103,7 @@ client.on("message", msg => {
                             mention = message.guild.members.get(args.slice(0, 1).join(' '));
                         mention = mention.user;
                     } catch (error) {
-                        return msg2.edit("<a:non:691361782387703818>Aucun utilisateur ou id d 'utilisateur donné!")
+                        return msg2.edit("<a:non:691361782387703818>Aucun utilisateur ou id d'utilisateur donné!")
 
                     }
                 }
