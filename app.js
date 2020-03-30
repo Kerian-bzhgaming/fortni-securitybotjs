@@ -109,7 +109,7 @@ client.on("message", msg => {
                 }
                 if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous bannir...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucune raison donné...")
-                if (!message.guild.member(user).bannable) return message.reply("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
+                if (!msg.guild.member(mention).bannable) return msg2.edit("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
 
                 let embeda = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
