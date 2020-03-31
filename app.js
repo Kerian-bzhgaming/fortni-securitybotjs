@@ -101,7 +101,7 @@ client.on("message", msg => {
                         if (!msg.guild.members.get(args.slice(0, 1).join(' ')))
 
                             user = msg.guild.members.get(args.slice(0, 1).join(' '));
-                        user = user.user;
+
                     } catch (error) {
                         return msg2.edit("<a:non:691361782387703818>Aucun utilisateur ou id d'utilisateur donné!")
 
