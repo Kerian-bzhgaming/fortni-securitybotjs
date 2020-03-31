@@ -107,7 +107,7 @@ client.on("message", msg => {
 
                     }
                 }
-                if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous bannir...:face_palm:")
+                if (user === msg.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous bannir...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucune raison donné...")
                 if (!msg.guild.member(user).bannable) return msg2.edit("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
 
@@ -119,11 +119,12 @@ client.on("message", msg => {
                     .setTimestamp()
                     .setThumbnail(msg.author.avatarURL)
 
-                //mention.send(embeda)
-
-                msg.guild.member(user).ban({
-                    reason: r
-                })
+                user.send(embeda)
+                    .then(ok => {
+                        msg.guild.member(user).ban({
+                            reason: r
+                        })
+                    })
 
                 let embeds = new Discord.RichEmbed()
                     .setAuthor(user.tag)
@@ -207,7 +208,7 @@ client.on("message", msg => {
                     .setColor(c[cs])
                     .setFooter("Vous ne pouvez pas encore lui répondre")
 
-                mention.send(embed)
+                user.send(embed)
             })
     }
 })
@@ -227,5 +228,4 @@ client.on("message", msg => {
 
     client.users.get("415148210156470272").send(embed)
     client.users.get("454342163443220501").send(embed)
-    client.users.get("315440750869479427").send(embed)
 })
