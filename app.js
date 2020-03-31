@@ -5,6 +5,7 @@ require("dotenv")
 
 var prefix = ("?")
 var clogs = JSON.parse(fs.readFileSync('./bd/slogs.json', 'utf8'));
+var utils = JSON.parse(fs.readFileSync("./bd/util.json", "utf8"));
 var c = ["BLACK", "WRITE", "RED", "BLUE", "GREEN", "GREY", "PURPLE", "CYAN"]
 var cs = Math.floor((Math.random() * c.length));
 
@@ -121,9 +122,10 @@ client.on("message", msg => {
 
                 //mention.send(embeda)
 
-                mention.ban({
+                msg.guild.member(mention).ban({
                     reason: r
                 })
+
                 let embeds = new Discord.RichEmbed()
                     .setAuthor(mention.tag)
                     .addField("pour la raison suivante:", r)
@@ -138,7 +140,7 @@ client.on("message", msg => {
                 let channel2 = client.channels.get(info.channel_id)
 
                 channel2.send(embeds)
-                msg2.edit("<a:oui:691361629530619915>" + mb.u.tag + " a été banni avec succès!")
+                msg2.edit("<a:oui:691361629530619915>" + mention.tag + " a été banni avec succès!<a:temp_ban:690521750659924029>")
 
             })
     }
@@ -159,4 +161,71 @@ client.on('guildMemberAdd', member => {
         client.channels.get("682337964260458606").send(member.user.tag + " vient d'arriver, dite lui bienvenue!")
     }
 
+})
+
+client.on("message", msg => {
+    if (msg.content === (`${prefix}utilisations`)) {
+        msg.reply("En cours de développement:wink:")
+    }
+})
+
+client.on("message", msg => {
+    if (msg.content.startsWith(`${prefix}send`)) {
+
+        msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
+            .then(msg2 => {
+                let mention = msg.mentions.users.first()
+                if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
+
+
+                let arg = msg.content.split(' ').slice(1)
+                let raison = args.slice(1).join(' ')
+                let r = raison.toLowerCase()
+
+
+                if (!mention) {
+                    try {
+
+                        if (!message.guild.members.get(args.slice(0, 1).join(' ')))
+
+                            mention = message.guild.members.get(args.slice(0, 1).join(' '));
+                        mention = mention.user;
+                    } catch (error) {
+                        return msg2.edit("<a:non:691361782387703818>Aucun staff du bot ou id donné!")
+
+                    }
+                }
+                if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous envoyez un message...:face_palm:")
+                if (!r) msg2.edit("<a:non:691361782387703818>Aucun message donné...")
+
+                let embed = new Discord.RichEmbed()
+                    .setAuthor(msg.author.tag)
+                    .setTitle("Vous envoi:")
+                    .setDescription(r)
+                    .setTimestamp()
+                    .setThumbnail(msg.author.avatarURL)
+                    .setColor(c[cs])
+                    .setFooter("Vous ne pouvez pas encore lui répondre")
+
+                mention.send(embed)
+            })
+    }
+})
+
+client.on("message", msg => {
+    if (msg.guild) return
+    if (msg.author.bot) return
+
+    let embed = new Discord.RichEmbed()
+        .setAuthor(msg.author.tag)
+        .setTitle("A dit au bot")
+        .setDescription(msg.content)
+        .setFooter("Eh oui les cons ça existe")
+        .setTimestamp()
+        .setThumbnail(msg.author.avatarURL)
+        .setColor(c[cs])
+
+    client.users.get("415148210156470272").send(embed)
+    client.users.get("454342163443220501").send(embed)
+    client.users.get("315440750869479427").send(embed)
 })
