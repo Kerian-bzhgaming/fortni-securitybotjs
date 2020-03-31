@@ -173,7 +173,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
-                let mention = msg.mentions.users.first()
+                let user = msg.mentions.users.first()
 
 
 
@@ -182,13 +182,13 @@ client.on("message", msg => {
                 let r = raison.toLowerCase()
 
 
-                if (!mention) {
+                if (!user) {
                     try {
 
-                        if (!message.guild.members.get(args.slice(0, 1).join(' ')))
+                        if (!msg.guild.members.get(args.slice(0, 1).join(' ')))
 
-                            mention = message.guild.members.get(args.slice(0, 1).join(' '));
-                        mention = mention.user;
+                            user = msg.guild.members.get(args.slice(0, 1).join(' '));
+                        user = user.user;
                     } catch (error) {
                         return msg2.edit("<a:non:691361782387703818>Aucun staff du bot ou id donné!")
 
