@@ -50,7 +50,7 @@ client.on("message", msg => {
                     if (err) return msg2.edit(`<a:non:691361782387703818>Une erreur a eu lieu pendant l'écriture des données...`)
                     console.log("Ok")
 
-
+                    let cs = Math.floor((Math.random() * c.length));
                 })
                 let embed = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
@@ -87,21 +87,21 @@ client.on("message", msg => {
 
                 if (!msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
-                let mention = msg.mentions.users.first()
+                let user = msg.mentions.users.first()
 
 
-                let arg = msg.content.split(' ').slice(1)
+                let args = msg.content.split(' ').slice(1)
                 let raison = args.slice(1).join(' ')
                 let r = raison.toLowerCase()
 
 
-                if (!mention) {
+                if (!user) {
                     try {
 
-                        if (!message.guild.members.get(args.slice(0, 1).join(' ')))
+                        if (!msg.guild.members.get(args.slice(0, 1).join(' ')))
 
-                            mention = message.guild.members.get(args.slice(0, 1).join(' '));
-                        mention = mention.user;
+                            user = msg.guild.members.get(args.slice(0, 1).join(' '));
+                        user = user.user;
                     } catch (error) {
                         return msg2.edit("<a:non:691361782387703818>Aucun utilisateur ou id d'utilisateur donné!")
 
@@ -109,7 +109,7 @@ client.on("message", msg => {
                 }
                 if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous bannir...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucune raison donné...")
-                if (!msg.guild.member(mention).bannable) return msg2.edit("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
+                if (!msg.guild.member(user).bannable) return msg2.edit("<a:non:691361782387703818>Je ne peux pas bannir cet utilisateur...")​
 
                 let embeda = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
@@ -121,17 +121,17 @@ client.on("message", msg => {
 
                 //mention.send(embeda)
 
-                msg.guild.member(mention).ban({
+                msg.guild.member(user).ban({
                     reason: r
                 })
 
                 let embeds = new Discord.RichEmbed()
-                    .setAuthor(mention.tag)
+                    .setAuthor(user.tag)
                     .addField("pour la raison suivante:", r)
                     .addField("Par:", msg.author.tag)
                     .addBlankField()
-                    .addField("ID du banni:", mention.id)
-                    .setThumbnail(mention.avatarURL)
+                    .addField("ID du banni:", user.id)
+                    .setThumbnail(user.avatarURL)
                     .setColor("RED")
                     .setTimestamp()
 
@@ -147,7 +147,7 @@ client.on("message", msg => {
 
 client.on('guildMemberAdd', member => {
     if (member.guild.id == "682335479978655744") {
-
+        let cs = Math.floor((Math.random() * c.length));
         let embed = new Discord.RichEmbed()
 
         .setTitle("Bienvenue " + member.user.tag + " !!!!!!!!!!")
@@ -197,6 +197,7 @@ client.on("message", msg => {
                 if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous envoyez un message...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucun message donné...")
 
+                let cs = Math.floor((Math.random() * c.length));
                 let embed = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
                     .setTitle("Vous envoi:")
@@ -214,7 +215,7 @@ client.on("message", msg => {
 client.on("message", msg => {
     if (msg.guild) return
     if (msg.author.bot) return
-
+    let cs = Math.floor((Math.random() * c.length));
     let embed = new Discord.RichEmbed()
         .setAuthor(msg.author.tag)
         .setTitle("A dit au bot")
