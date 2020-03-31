@@ -88,7 +88,6 @@ client.on("message", msg => {
                 if (!msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
                 let mention = msg.mentions.users.first()
-                if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
 
 
                 let arg = msg.content.split(' ').slice(1)
@@ -175,7 +174,7 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
                 let mention = msg.mentions.users.first()
-                if (!mention) return msg2.edit("<a:non:691361782387703818>Aucun utilisateur mentionné...")
+
 
 
                 let arg = msg.content.split(' ').slice(1)
