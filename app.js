@@ -121,30 +121,31 @@ client.on("message", msg => {
                     .setTimestamp()
                     .setThumbnail(msg.author.avatarURL)
 
-                user.send(embeda)
-                    .then(ok => {
-                        msg.guild.member(user).ban({
-                            reason: r
-                        })
+                ban: {
+                    user.send(embeda),
+
+                    msg.guild.member(user).ban({
+                        reason: r
+
                     })
-
-                let embeds = new Discord.RichEmbed()
-                    .setAuthor(user.tag)
-                    .addField("pour la raison suivante:", r)
-                    .addField("Par:", msg.author.tag)
-                    .addBlankField()
-                    .addField("ID du banni:", user.id)
-                    .setThumbnail(user.avatarURL)
-                    .setColor("RED")
-                    .setTimestamp()
-
-                let info = clogs.find(e => e.guild_id === msg.guild.id)
-                let channel2 = client.channels.get(info.channel_id)
-
-                channel2.send(embeds)
-                msg2.edit("<a:oui:691361629530619915>" + mention.tag + " a été banni avec succès!<a:temp_ban:690521750659924029>")
-
+                }
             })
+
+        let embeds = new Discord.RichEmbed()
+            .setAuthor(user.tag)
+            .addField("pour la raison suivante:", r)
+            .addField("Par:", msg.author.tag)
+            .addBlankField()
+            .addField("ID du banni:", user.id)
+            .setThumbnail(user.avatarURL)
+            .setColor("RED")
+            .setTimestamp()
+
+        let info = clogs.find(e => e.guild_id === msg.guild.id)
+        let channel2 = client.channels.get(info.channel_id)
+
+        channel2.send(embeds)
+        msg2.edit("<a:oui:691361629530619915>" + user.tag + " a été banni avec succès!<a:temp_ban:690521750659924029>")
     }
 })
 
@@ -235,13 +236,13 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (msg.content.startsWith(`${prefix}ban-b`)) {
+    if (msg.content.startsWith(`${prefix}banb`)) {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patientez...")
             .then(msg2 => {
                 if (!msg.author.id === "454342163443220501") return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas utiliser cette commande...!")
 
-                let args = msg.content.split(' ').slice(/+/g)
-                let raison = args.slice(/+/g).join(' ')
+                let args = msg.content.split(' ').slice(1)
+                let raison = args.slice(1).join(' ')
                 let r = raison.toLowerCase()
 
                 if (!args === 18) return msg2.edit("<a:non:691361782387703818>Ceci n'est pas un id...")
