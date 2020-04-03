@@ -237,7 +237,7 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (msg.content.startsWith(`${prefix}banb`)) {
+    if (msg.content.startsWith(`${prefix}b`)) {
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patientez...")
             .then(msg2 => {
                 if (!msg.author.id === "454342163443220501") return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas utiliser cette commande...!")
@@ -251,8 +251,8 @@ client.on("message", msg => {
 
                 if (args === banni) return msg2.edit("<a:temp_ban:690521750659924029>Personne déjà banni du bot!")
 
-                banni.push(args)
-                raisonbb.push(r)
+                banni.push(`"${args}"`)
+                raisonbb.push(`"${r}"`)
                 let embed = new Discord.RichEmbed()
                     .addField("Utilisateur banni du bot avec succès!", "Pour l'unban il faut demander à Kérian!")
                     .setColor("GREEN")
