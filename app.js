@@ -6,7 +6,8 @@ require("dotenv")
 var prefix = ("?")
 var clogs = JSON.parse(fs.readFileSync('./bd/slogs.json', 'utf8'));
 var utils = JSON.parse(fs.readFileSync("./bd/util.json", "utf8"));
-var bani = JSON.parse(fs.readFileSync("./bd/ban.json", "utf8"));
+var banni = []
+var raisonbb = []
 var c = ["BLACK", "WRITE", "RED", "BLUE", "GREEN", "GREY", "PURPLE", "CYAN"]
 var cs = Math.floor((Math.random() * c.length));
 
@@ -36,7 +37,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
-                if (bani.find(e => e.user_id === msg.author.id)) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
                 if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise.")
                 let args = msg.mentions.channels.first();
                 if (!args) return msg2.edit(`<a:non:691361782387703818>Erreur de syntaxe.`)
@@ -75,7 +76,7 @@ client.on("message", msg => {
 
 client.on("message", msg => {
     if (msg.content === (`${prefix}ping`)) {
-        if (bani.find(e => e.user_id === msg.author.id)) return msg.channel.send(msg.author + " Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+        if (msg.author.id === banni) return msg.channel.send(msg.author + " Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
         msg.channel.send("``" + client.ping + "`` Pong!:ping_pong:")
     }
 
@@ -86,7 +87,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
-                if (bani.find(e => e.user_id === msg.author.id)) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
                 if (!msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
                 let user = msg.mentions.users.first()
@@ -177,7 +178,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
-                if (bani.find(e => e.user_id === msg.author.id)) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
                 let user = msg.mentions.users.first()
 
 
@@ -218,7 +219,7 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (bani.find(e => e.user_id === msg.author.id)) return
+    if (msg.author.id === banni) return
     if (msg.guild) return
     if (msg.author.bot) return
     let cs = Math.floor((Math.random() * c.length));
@@ -247,14 +248,17 @@ client.on("message", msg => {
 
                 if (!args === 18) return msg2.edit("<a:non:691361782387703818>Ceci n'est pas un id...")
                 if (!r) return msg2.edit("<a:non:691361782387703818>Aucune raison donnée...")
-                let bann = bani.find(e => e.user_id === args)
-                if (bann) return msg2.edit("<a:non:691361782387703818>Cette utilisateur est déjà banni du bot.")
-                bani.push({ user_id: args, raison: r })
-                fs.writeFile('./bd/ban.json', JSON.stringify(bani), (err) => {
-                    if (err) return msg2.edit(`<a:non:691361782387703818>Une erreur a eu lieu pendant l'écriture des données...`)
 
+                if (args === banni) return msg2.edit("<a:temp_ban:690521750659924029>Personne déjà banni du bot!")
 
-                })
+                banni.push(args)
+                raisonbb.push(r)
+                let embed = new Discord.RichEmbed()
+                    .addField("Utilisateur banni du bot avec succès!", "Pour l'unban il faut demander à Kérian!")
+                    .setColor("GREEN")
+                msg2.edit(embed)
+                msg2.react("<a:temp_ban:690521750659924029>")
+
             })
     }
 })
