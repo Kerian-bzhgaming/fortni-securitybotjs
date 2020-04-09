@@ -130,23 +130,24 @@ client.on("message", msg => {
 
                     })
                 }
+
+
+                let embeds = new Discord.RichEmbed()
+                    .setAuthor(user.tag)
+                    .addField("pour la raison suivante:", r)
+                    .addField("Par:", msg.author.tag)
+                    .addBlankField()
+                    .addField("ID du banni:", user.id)
+                    .setThumbnail(user.avatarURL)
+                    .setColor("RED")
+                    .setTimestamp()
+
+                let info = clogs.find(e => e.guild_id === msg.guild.id)
+                let channel2 = client.channels.get(info.channel_id)
+
+                channel2.send(embeds)
+                msg2.edit("<a:oui:691361629530619915>" + user.tag + " a été banni avec succès!<a:temp_ban:690521750659924029>")
             })
-
-        let embeds = new Discord.RichEmbed()
-            .setAuthor(user.tag)
-            .addField("pour la raison suivante:", r)
-            .addField("Par:", msg.author.tag)
-            .addBlankField()
-            .addField("ID du banni:", user.id)
-            .setThumbnail(user.avatarURL)
-            .setColor("RED")
-            .setTimestamp()
-
-        let info = clogs.find(e => e.guild_id === msg.guild.id)
-        let channel2 = client.channels.get(info.channel_id)
-
-        channel2.send(embeds)
-        msg2.edit("<a:oui:691361629530619915>" + user.tag + " a été banni avec succès!<a:temp_ban:690521750659924029>")
     }
 })
 
@@ -200,7 +201,7 @@ client.on("message", msg => {
 
                     }
                 }
-                if (user === message.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous envoyez un message...:face_palm:")
+                if (user === msg.author) return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas vous envoyez un message...:face_palm:")
                 if (!r) msg2.edit("<a:non:691361782387703818>Aucun message donné...")
 
                 let cs = Math.floor((Math.random() * c.length));
@@ -269,17 +270,18 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
 
-                clogs.push({ serveur: msg.guild.name, guild_id: msg.guild.id, uses: utils + 1 })
+                clogs.push({ guild_id: msg.guild.id, serveur: msg.guild.name, uses: utils + 1 })
                 fs.writeFile("./bd/util.json", JSON.stringify(utils), err => {
                     if (err) return msg2.edit("Uh oh! Une erreur est survenu leur du setup...:confused:")
                 })
 
                 msg2.edit("Terminé avec succès!")
                 let guilduses = utils.find(e => e.guild_id === msg.guild.id);
+                let ut = guilduses.uses
                 let gg = new Discord.RichEmbed()
                     .setTitle("Bravo vous venez de gagner une utilisation!")
                     .setDescription("Pour vous expliquez en quelques détails, les utilisations servent à débloquer les autres commandes!")
-                    .addField("Voici votre nombre d'utilisations:", guilduses)
+                    .addField("Voici votre nombre d'utilisations:", ut)
                     .setColor(c[cs])
                     .setThumbnail(msg.author.avatarURL)
                     .setImage(msg.guild.bannerURL)
