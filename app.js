@@ -53,7 +53,7 @@ client.on("message", msg => {
                     if (err) return msg2.edit(`<a:non:691361782387703818>Une erreur a eu lieu pendant l'écriture des données...`)
                     console.log("Ok")
 
-                    let cs = Math.floor((Math.random() * c.length));
+
                 })
                 let embed = new Discord.RichEmbed()
                     .setAuthor(msg.author.tag)
@@ -264,35 +264,18 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (msg.content.startsWith(prefix + "clogs")) {
+    if (msg.content.startsWith(prefix + "setup")) {
 
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
-                if (!utils[msg.guild.id]) {
-                    monnaie[msg.guild.id] = {
-                        utils: 0
-                    };
-                }
 
-                let baseUtils = Maths.floor(Maths.random() * 0) + 1;
-                let ajoutUtils = Maths.floor(Maths.random() * 1) + 1;
-
-                if (ajoutUtils === baseUtils) {
-                    utils[msg.guild.id] = {
-                        utils: utils[msg.guild.id].utils + ajoutUtils
-                    }
-
-                    fs.writeFile("./bd/util.json", JSON.stringify(utils), err => {
-                        if (err) return msg2.edit("Uh oh! Une erreur est survenu leur du setup...:confused:")
-                    })
-
-                }
+                clogs.push({ serveur: msg.guild.name, guild_id: msg.guild.id, uses: utils + 1 })
                 fs.writeFile("./bd/util.json", JSON.stringify(utils), err => {
                     if (err) return msg2.edit("Uh oh! Une erreur est survenu leur du setup...:confused:")
                 })
 
                 msg2.edit("Terminé avec succès!")
-                let guilduses = utils[msg.guild.id].utils;
+                let guilduses = utils.find(e => e.guild_id === msg.guild.id);
                 let gg = new Discord.RichEmbed()
                     .setTitle("Bravo vous venez de gagner une utilisation!")
                     .setDescription("Pour vous expliquez en quelques détails, les utilisations servent à débloquer les autres commandes!")
