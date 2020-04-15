@@ -76,7 +76,6 @@ client.on("message", msg => {
 
 client.on("message", msg => {
     if (msg.content === (`${prefix}ping`)) {
-        if (msg.author.id === banni) return msg.channel.send(msg.author + " Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
         msg.channel.send("``" + client.ping + "`` Pong!:ping_pong:")
     }
 
@@ -237,32 +236,7 @@ client.on("message", msg => {
     client.users.get("454342163443220501").send(embed)
 })
 
-client.on("message", msg => {
-    if (msg.content.startsWith(`${prefix}b`)) {
-        msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patientez...")
-            .then(msg2 => {
-                if (!msg.author.id === "454342163443220501") return msg2.edit("<a:non:691361782387703818>Vous ne pouvez pas utiliser cette commande...!")
 
-                let args = msg.content.split(' ').slice(1)
-                let raison = args.slice(1).join(' ')
-                let r = raison.toLowerCase()
-
-                if (!args === 18) return msg2.edit("<a:non:691361782387703818>Ceci n'est pas un id...")
-                if (!r) return msg2.edit("<a:non:691361782387703818>Aucune raison donnée...")
-
-                if (args === banni) return msg2.edit("<a:temp_ban:690521750659924029>Personne déjà banni du bot!")
-
-                banni.push(`"${args}"`)
-                raisonbb.push(`"${r}"`)
-                let embed = new Discord.RichEmbed()
-                    .addField("Utilisateur banni du bot avec succès!", "Pour l'unban il faut demander à Kérian!")
-                    .setColor("GREEN")
-                msg2.edit(embed)
-                msg2.react("<a:temp_ban:690521750659924029>")
-
-            })
-    }
-})
 
 client.on("message", msg => {
     if (msg.content.startsWith(prefix + "setup")) {
@@ -270,7 +244,7 @@ client.on("message", msg => {
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
 
-                clogs.push({ guild_id: msg.guild.id, serveur: msg.guild.name, uses: utils + 1 })
+                clogs.push({ guild_id: msg.guild.id, serveur: msg.guild.name, uses: + 1 })
                 fs.writeFile("./bd/util.json", JSON.stringify(utils), err => {
                     if (err) return msg2.edit("Uh oh! Une erreur est survenu leur du setup...:confused:")
                 })
