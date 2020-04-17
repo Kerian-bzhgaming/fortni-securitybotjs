@@ -265,7 +265,7 @@ client.on("message", msg => {
 
 client.on("message", msg => {
     if (msg.content.startsWith(`${prefix}play`)) {
-        if (msg.member.voiceChannel) return msg.channel.send("Veuillez vous connectez dans un salon vocal.")
+        if (!msg.member.voiceChannel) return msg.channel.send("Veuillez vous connectez dans un salon vocal.")
         if (msg.guild.me.voiceChannel) return msg.channel.send("Uh oh! Je suis déjà dans un salon vocal...")
         let args = msg.content.split(" ")
         if (!args[0]) return msg.channel.send("Aucun lien donné...")
@@ -273,12 +273,18 @@ client.on("message", msg => {
         let validate = ytdl.validateURL(args[0])
         if (!validate) return msg.channel.send("Uh oh! Ce n'est pas un lien valide...")
 
-        let info = ytdl.getInfo(args[0])
+        let info = ytdl.getInfo(args[1])
 
-        let connection = msg.member.voiceChannel.join();
+        msg.member.join()
 
-        let dispatcher = connection.play(ytdl(args[0], { filter: "audioonly" }))
+        let dispatcher = connection.play((info.url))
 
         msg.channel.send(`Vous écoutez désormais ${info.title}`)
     }
 })
+
+client.music = require("discord.js-musicbot-addon");
+client.music.start(client, {
+    youtubeKey: fortni - security,
+    botPrefix: '?'
+});
