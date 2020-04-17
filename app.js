@@ -7,8 +7,7 @@ require("dotenv");
 var prefix = ("?")
 var clogs = JSON.parse(fs.readFileSync('./bd/slogs.json', 'utf8'));
 var utils = JSON.parse(fs.readFileSync("./bd/util.json", "utf8"));
-var banni = []
-var raisonbb = []
+const queue = new Map();
 var c = ["BLACK", "WRITE", "RED", "BLUE", "GREEN", "GREY", "PURPLE", "CYAN"]
 var cs = Math.floor((Math.random() * c.length));
 
@@ -320,6 +319,7 @@ async function execute(message, serverQueue) {
         queue.set(message.guild.id, queueContruct);
 
         queueContruct.songs.push(song);
+        fs.writeFile("./bd/songs.json", JSON.stringify(queue), err => {})
 
         try {
             var connection = await voiceChannel.join();
