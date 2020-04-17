@@ -7,7 +7,6 @@ require("dotenv");
 var prefix = ("?")
 var clogs = JSON.parse(fs.readFileSync('./bd/slogs.json', 'utf8'));
 var utils = JSON.parse(fs.readFileSync("./bd/util.json", "utf8"));
-var playlist = TXT.parse(fs.readFileSync("./playlist.txt", "utf8"));
 var c = ["BLACK", "WRITE", "RED", "BLUE", "GREEN", "GREY", "PURPLE", "CYAN"]
 var cs = Math.floor((Math.random() * c.length));
 
@@ -37,7 +36,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>Veuillez patienter...")
             .then(msg2 => {
-                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+
                 if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise.")
                 let args = msg.mentions.channels.first();
                 if (!args) return msg2.edit(`<a:non:691361782387703818>Erreur de syntaxe.`)
@@ -86,7 +85,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
-                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+
                 if (!msg.member.hasPermission("BAN_MEMBERS")) return msg2.edit("<a:attention:690519193287917579>Vous n'avez pas la permission requise...")
 
                 let user = msg.mentions.users.first()
@@ -178,7 +177,7 @@ client.on("message", msg => {
 
         msg.channel.send("<a:load:693178886586105896>En cours d'éxecution, veuillez patienter...")
             .then(msg2 => {
-                if (msg.author.id === banni) return msg2.edit("Vous avez été ban du bot, vous ne pouvez pas faire de commande...")
+
                 let user = msg.mentions.users.first()
 
 
@@ -219,7 +218,6 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (msg.author.id === banni) return
     if (msg.guild) return
     if (msg.author.bot) return
     let cs = Math.floor((Math.random() * c.length));
@@ -272,14 +270,14 @@ client.on("message", msg => {
         let args = msg.content.split(" ")
         if (!args[0]) return msg.channel.send("Aucun lien donné...")
 
-        let validate = await ytdl.validateURL(args[0])
+        let validate = ytdl.validateURL(args[0])
         if (!validate) return msg.channel.send("Uh oh! Ce n'est pas un lien valide...")
 
-        let info = await ytdl.getInfo(args[0])
+        let info = ytdl.getInfo(args[0])
 
-        let connection = await msg.member.voiceChannel.join();
+        let connection = msg.member.voiceChannel.join();
 
-        let dispatcher = await connection.play(ytdl(args[0], { filter: "audioonly" }))
+        let dispatcher = connection.play(ytdl(args[0], { filter: "audioonly" }))
 
         msg.channel.send(`Vous écoutez désormais ${info.title}`)
     }
