@@ -264,7 +264,7 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
-    if (msg.content.startsWith(`${prefix}play `)) {
+    if (msg.content.startsWith(`${prefix}play`)) {
         if (msg.member.voiceChannel) return msg.channel.send("Veuillez vous connectez dans un salon vocal.")
         if (msg.guild.me.voiceChannel) return msg.channel.send("Uh oh! Je suis déjà dans un salon vocal...")
         let args = msg.content.split(" ")
