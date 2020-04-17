@@ -266,92 +266,21 @@ client.on("message", msg => {
 })
 
 client.on("message", msg => {
+    if (msg.content.startsWith(`${prefix}play `)) {
+        if (msg.member.voiceChannel) return msg.channel.send("Veuillez vous connectez dans un salon vocal.")
+        if (msg.guild.me.voiceChannel) return msg.channel.send("Uh oh! Je suis déjà dans un salon vocal...")
+        let args = msg.content.split(" ")
+        if (!args[0]) return msg.channel.send("Aucun lien donné...")
 
-    var queue = new Array()
-    let answer = "";
-    let args = msg.content.split("")
+        let validate = await ytdl.validateURL(args[0])
+        if (!validate) return msg.channel.send("Uh oh! Ce n'est pas un lien valide...")
 
-    function play(args, queue) {
-        if (args[1].match(/https|http.*(^|=|\/)([0-9A-Za-z_-]{11})(\/|&|$|\?|#)/)) {
-            var id = args[1].match(/(^|=|\/)([0-9A-Za-z_-]{11})(\/|&|$|\?|#)/)[2];
+        let info = await ytdl.getInfo(args[0])
 
-            let voiceChannel = msg.member.voiceChannel
-            voiceChannel.join()
-                .then(function(connection) {
-                    let stream = ytdl(id, {
-                        filter: 'audioonly'
-                    });
-                    message.delete();
+        let connection = await msg.member.voiceChannel.join();
 
-                    var dispatcher = connection.playStream(stream);
+        let dispatcher = await connection.play(ytdl(args[0], { filter: "audioonly" }))
 
-                    var info = ytdl.getInfo(id, function(err, info) {
-                        if (err) throw err;
-                        answer = ` ▶ Tu écoutes actuellement ${'_' + info.title + '_'} (Youtube ID : ` + id + `)`;
-                        message.channel.send(answer);
-                    });
-
-                    dispatcher.on('end', function() {
-                        voiceChannel.leave();
-                    })
-                })
-        }
-    }
-    // Commandes play, stop, play queue, save playlist
-    if (msg.content.startsWith('?p ')) {
-        play(args, queue);
-    } else if (sg.content === '?p queue') {
-        let voiceChannel = msg.member.voiceChannel
-        voiceChannel.join()
-            .then(function(connection) {
-                for (var i = 0; i < queue.length; i++) {
-                    let stream = ytdl(queue[i], {
-                        filter: 'audioonly'
-                    });
-                    msg.delete();
-
-                    var dispatcher = connection.playStream(stream);
-
-                    var info = ytdl.getInfo(id, function(err, info) {
-                        if (err) throw err;
-                        answer = ` ▶ Tu écoutes actuellement ${'_' + info.title + '_'} (Youtube ID : ` + id + `)`;
-                        msg.channel.send(answer);
-                    });
-                }
-            });
-        dispatcher.on('end', function() {
-            voiceChannel.leave();
-        });
-    } else if (msg.content.startsWith('?stop')) {
-        let command = 'stop';
-        let voiceChannel = msg.member.voiceChannel
-        voiceChannel.leave();
-        if (command === 'stop') {
-            msg.channel.send('⏹ ' + user + ' a arrêté la musique.');
-        }
-    } else if (msg.content.startsWith('?add')) {
-        if (args[1].match(/https|http.*(^|=|\/)([0-9A-Za-z_-]{11})(\/|&|$|\?|#)/)) {
-            var id = args[1].match(/(^|=|\/)([0-9A-Za-z_-]{11})(\/|&|$|\?|#)/)[2];
-        } else {
-            msg.channel.send('Blip bloup, tu n\'as pas entré une URL valide !');
-        }
-        queue.push(id);
-        console.log(queue);
-        var infoQueue = ytdl.getInfo(id, function(err, infoQueue) {
-            if (err) throw err;
-            msg.channel.send(`${'_' + infoQueue.title + '_'} a été ajouté à la playlist !`);
-        });
-    } else if (msg.content === '?q') {
-        console.log(queue);
-        for (var i = 0; i < queue.length; i++) {
-            msg.channel.send(i + 1 + '. ' + queue[i]);
-        }
-    } else if (msg.content === '?save') {
-        // Sauvegarde la playlist dans un fichier
-        playlist.push(msg.author.id + ": " + queue)
-        fs.writeFile("./playlist.txt", function(err) {
-            if (err) throw err;
-        })
-        msg.channel.send("Playlist sauvegardé!")
+        msg.channel.send(`Vous écoutez désormais ${info.title}`)
     }
 })
